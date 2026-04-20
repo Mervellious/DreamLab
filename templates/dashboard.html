@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Log Out -->
+        <!-- Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar">
+                <h1 class="welcome-title">Welcome back, {{ user_name }}</h1>
+                
+            </div>
+
+            <div class="dream-card">
+                <p class="dream-question">Do you remember what you dreamed of last night ?</p>
+                <div class="dream-buttons">
+                    <a href="{{ url_for('write_dream') }}" class="dream-btn">Write your dream</a>
+                    <a href="{{ url_for('forgot_dream') }}" class="dream-btn">I forgot</a>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <a href="{{ url_for('reports') }}" style="text-decoration:none;color:inherit;">
+                    <div class="stat-card">
+                        <i data-lucide="file-text" class="stat-icon"></i>
+                        <p class="stat-label">View Reports</p>
+                        <p class="stat-number">{{ report_count }}</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('my_dreams') }}" style="text-decoration:none;color:inherit;">
+                    <div class="stat-card">
+                        <i data-lucide="bookmark" class="stat-icon"></i>
+                        <p class="stat-label">Total Dreams Recorded</p>
+                        <p class="stat-number">{{ dream_count }}</p>
+                    </div>
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" style="text-decoration:none;color:inherit;">
+                    <div class="stat-card">
+                        <i data-lucide="moon" class="stat-icon"></i>
+                        <p class="stat-label">Avg Sleep Quality</p>
+                        <p class="stat-number">{{ avg_sleep_quality }}</p>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

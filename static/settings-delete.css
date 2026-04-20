@@ -1,0 +1,246 @@
+/* settings-delete.css
+   Page-specific styles for the Delete My Account sub-page.
+   Base layout, sidebar, nav, and glass card are defined in
+   settings.css — link that file first.
+*/
+
+/* ── DELETE CONFIRMATION CARD ── */
+.delete-card {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 26px;
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    box-shadow:
+        0 0 60px rgba(255, 255, 255, 0.6),
+        0 0 25px rgba(255, 255, 255, 0.45),
+        0 8px 32px rgba(120, 100, 220, 0.2),
+        0 24px 64px rgba(100, 80, 200, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ── WARNING BLOCK ── */
+.warning-block {
+    width: 100%;
+    background: rgba(192, 80, 80, 0.06);
+    border: 1px solid rgba(192, 80, 80, 0.22);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.warning-heading {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a03535;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.warning-heading svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+}
+
+.warning-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding-left: 4px;
+}
+
+.warning-list li {
+    font-size: 13px;
+    color: #7a3535;
+    font-weight: 500;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.5;
+}
+
+.warning-list li::before {
+    content: '–';
+    color: #c06060;
+    flex-shrink: 0;
+}
+
+/* ── CONFIRMATION QUESTION ── */
+.confirm-question {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* ── CONFIRMATION BUTTONS ── */
+.confirm-actions {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.delete-yes-btn {
+    padding: 13px 26px;
+    background: rgba(192, 80, 80, 0.12);
+    color: #b03030;
+    border: 1.5px solid rgba(192, 80, 80, 0.45);
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.delete-yes-btn:hover {
+    background: rgba(192, 80, 80, 0.22);
+    box-shadow: 0 0 20px rgba(192, 80, 80, 0.28);
+    transform: translateY(-1px);
+}
+
+.delete-no-btn {
+    display: inline-block;
+    padding: 13px 26px;
+    border: 1.5px solid #6155f5;
+    border-radius: 20px;
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.2), rgba(237, 210, 255, 0.2));
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.delete-no-btn:hover {
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.45), rgba(237, 210, 255, 0.45));
+    transform: translateY(-1px);
+    box-shadow: 0 0 12px rgba(130, 100, 245, 0.25);
+}
+
+/* ── HIDDEN UTILITY ──
+   Placed after all display-setting rules so it always wins
+   the cascade (same specificity, last rule wins).
+*/
+.hidden {
+    display: none !important;
+}
+
+/* ── SUCCESS CARD ──
+   Exact same design as submit_page.css (.card, .success-icon,
+   .check-icon, .submitted-title, .submitted-body, .home-btn)
+*/
+.success-card {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 26px;
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    box-shadow:
+        0 0 60px rgba(255, 255, 255, 0.6),
+        0 0 25px rgba(255, 255, 255, 0.45),
+        0 8px 32px rgba(120, 100, 220, 0.2),
+        0 24px 64px rgba(100, 80, 200, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.success-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 40%, rgba(170, 228, 231, 0.9), rgba(180, 160, 240, 0.7));
+    box-shadow:
+        0 0 0 14px rgba(170, 228, 231, 0.2),
+        0 0 0 26px rgba(180, 160, 240, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.check-icon {
+    width: 44px;
+    height: 44px;
+    color: white;
+    stroke-width: 2.5;
+}
+
+.submitted-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+.submitted-body {
+    font-size: 15px;
+    font-weight: 500;
+    color: #444;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.home-btn {
+    display: inline-block;
+    padding: 13px 26px;
+    border: 1.5px solid #6155f5;
+    border-radius: 20px;
+    background: #6155f5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    margin-top: 12px;
+}
+
+.home-btn:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
+    box-shadow: 0 0 18px rgba(97, 85, 245, 0.45), 0 0 6px rgba(97, 85, 245, 0.3);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+    .delete-card,
+    .success-card {
+        padding: 36px 22px;
+    }
+
+    .confirm-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .delete-yes-btn,
+    .delete-no-btn {
+        text-align: center;
+    }
+
+    .home-btn {
+        width: auto;
+    }
+}

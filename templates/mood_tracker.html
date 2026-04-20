@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mood Tracker - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_dreams.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='mood_tracker.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item active-nav">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar">
+        
+               
+            </div>
+
+            <div class="dreams-card chart-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <p class="card-title">Mood Frequency</p>
+                        <p class="card-subtitle">How often each mood appeared in your dreams</p>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="moodChart"></canvas>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+    <script>
+        const rawCounts = {{ mood_counts | tojson }};
+
+        const sorted = Object.entries(rawCounts).sort((a, b) => b[1] - a[1]);
+        const labels = sorted.map(e => e[0]);
+        const values = sorted.map(e => e[1]);
+
+        const palette = [
+            'rgba(97,  85, 245, 0.65)',
+            'rgba(160,156, 245, 0.65)',
+            'rgba(197,191, 247, 0.65)',
+            'rgba(176,168, 212, 0.65)',
+            'rgba(130,100, 220, 0.65)',
+            'rgba(80,  70, 200, 0.65)',
+            'rgba(220,200, 255, 0.65)',
+            'rgba(140,120, 230, 0.65)'
+        ];
+        const colors = labels.map((_, i) => palette[i % palette.length]);
+
+        const ctx = document.getElementById('moodChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Times appeared',
+                    data: values,
+                    backgroundColor: colors,
+                    borderColor: colors.map(c => c.replace('0.65', '1')),
+                    borderWidth: 1.5,
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(255,255,255,0.95)',
+                        titleColor: '#333',
+                        bodyColor: '#6155f5',
+                        borderColor: 'rgba(197,191,247,0.5)',
+                        borderWidth: 1,
+                        padding: 10,
+                        cornerRadius: 10,
+                        callbacks: {
+                            label: ctx => ` ${ctx.parsed.x} time${ctx.parsed.x !== 1 ? 's' : ''}`
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1,
+                            color: '#a09cf5',
+                            font: { family: 'Montserrat', size: 11 }
+                        },
+                        grid: { color: 'rgba(197,191,247,0.2)' }
+                    },
+                    y: {
+                        ticks: {
+                            color: '#555',
+                            font: { family: 'Montserrat', size: 12, weight: '500' }
+                        },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

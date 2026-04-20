@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 4 - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='q4.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="top-nav-icons">
+        <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+            <i data-lucide="home"></i>
+        </a>
+        <a href="{{ url_for('login') }}" class="nav-icon-btn" title="Log Out">
+            <i data-lucide="log-out"></i>
+        </a>
+    </div>
+
+    <div class="page-wrapper">
+
+        <form method="POST" action="/q4">
+        <div class="card">
+
+            <p class="question-label">In the dream, did you feel more active or more like an observer?</p>
+
+            <div class="choice-buttons">
+                <button type="button" class="choice-btn">Mostly active (taking action)</button>
+                <button type="button" class="choice-btn">Mostly observing</button>
+                <button type="button" class="choice-btn">Both</button>
+                <button type="button" class="choice-btn">Not sure</button>
+            </div>
+            <input type="hidden" id="dream-role" name="dream_role" value="">
+
+            <div class="field-group">
+                <label class="field-label">Please describe</label>
+                <textarea class="dream-textarea" name="dream_role_description"></textarea>
+            </div>
+
+            <div class="pagination">
+                <a href="{{ url_for('q3') }}" class="page-btn">
+                    <i data-lucide="arrow-left"></i>
+                    Back
+                </a>
+                <button type="submit" class="page-btn">
+                    Next
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+
+        </div>
+        </form>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.querySelectorAll('.choice-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isActive = btn.classList.contains('active');
+                document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+                if (!isActive) {
+                    btn.classList.add('active');
+                    document.getElementById('dream-role').value = btn.textContent.trim();
+                } else {
+                    document.getElementById('dream-role').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

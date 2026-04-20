@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ nightmare.title }} - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='nightmares.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nightmare_detail.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item active-nav">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="/settings" class="nav-item">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar">
+            </div>
+
+            <div class="detail-card">
+
+                <!-- Date -->
+                <p class="detail-date">{{ nightmare.date.strftime('%B %d, %Y').upper() }}</p>
+
+                <!-- Title -->
+                <h2 class="detail-title">{{ nightmare.title }}</h2>
+
+                <div class="divider"></div>
+
+                <!-- Description -->
+                <div class="detail-section">
+                    <div class="detail-label-row">
+                        <p class="detail-label">Description</p>
+                        <button id="desc-edit-btn" class="add-tag-btn" onclick="startEditDesc()">Edit</button>
+                    </div>
+                    <p class="detail-description" id="desc-text">{{ nightmare.description }}</p>
+                    <form method="POST" action="{{ url_for('update_nightmare', nightmare_id=nightmare.id) }}" id="desc-form" style="display:none;">
+                        <textarea id="desc-edit" name="description" class="desc-textarea">{{ nightmare.description }}</textarea>
+                        <button id="desc-save" type="submit" class="desc-save-btn">Save</button>
+                    </form>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Mood -->
+                <div class="detail-section">
+                    <p class="detail-label">Mood</p>
+                    <div class="pill-group" id="mood-group">
+                        {% for mood in nightmare.mood.split(',') %}
+                        <span class="pill editable-pill">
+                            {{ mood | trim }}
+                            <button class="pill-remove" onclick="removePill(this)" title="Remove">×</button>
+                        </span>
+                        {% endfor %}
+                        <button class="add-tag-btn" onclick="showAddInput(this, 'mood-group')">+ Add</button>
+                    </div>
+                </div>
+
+                <!-- Sleep Quality -->
+                <div class="detail-section">
+                    <p class="detail-label">Sleep Quality</p>
+                    <p class="sleep-quality-value">{{ nightmare.sleep_qualitiy }}</p>
+                </div>
+
+                <!-- Symbols -->
+                <div class="detail-section">
+                    <p class="detail-label">Symbols</p>
+                    <div class="pill-group" id="symbols-group">
+                        {% for symbol in nightmare.symbols.split(',') %}
+                        <span class="pill editable-pill">
+                            {{ symbol | trim }}
+                            <button class="pill-remove" onclick="removePill(this)" title="Remove">×</button>
+                        </span>
+                        {% endfor %}
+                        <button class="add-tag-btn" onclick="showAddInput(this, 'symbols-group')">+ Add</button>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <!-- Back button -->
+                <a href="{{ url_for('nightmares') }}" class="back-btn">
+                    <i data-lucide="arrow-left" style="width:15px;height:15px;"></i>
+                    Back to Nightmares
+                </a>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+    <script>
+        function startEditDesc() {
+            document.getElementById('desc-text').style.display = 'none';
+            document.getElementById('desc-edit-btn').style.display = 'none';
+            document.getElementById('desc-form').style.display = 'block';
+            document.getElementById('desc-edit').focus();
+        }
+
+        function removePill(btn) {
+            btn.closest('.editable-pill').remove();
+        }
+
+        function showAddInput(btn, groupId) {
+            const group = document.getElementById(groupId);
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'add-tag-input';
+            input.placeholder = 'New tag…';
+
+            group.insertBefore(input, btn);
+            input.focus();
+
+            function commit() {
+                const val = input.value.trim();
+                if (val) {
+                    const pill = document.createElement('span');
+                    pill.className = 'pill editable-pill';
+                    pill.innerHTML = val + '<button class="pill-remove" title="Remove" onclick="removePill(this)">×</button>';
+                    group.insertBefore(pill, input);
+                }
+                input.remove();
+            }
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') { e.preventDefault(); commit(); }
+                if (e.key === 'Escape') { input.remove(); }
+            });
+
+            input.addEventListener('blur', commit);
+        }
+    </script>
+</body>
+</html>

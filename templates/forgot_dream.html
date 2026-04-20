@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noted - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='submit_page.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="top-nav-icons">
+        <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+            <i data-lucide="home"></i>
+        </a>
+        <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+            <i data-lucide="log-out"></i>
+        </a>
+    </div>
+
+    <div class="page-wrapper">
+
+        <div class="card">
+
+            <div class="success-icon">
+                <i data-lucide="check" class="check-icon"></i>
+            </div>
+
+            <h1 class="submitted-title">RECORDED !</h1>
+
+            <p class="submitted-body">
+                Even when you don't remember a dream, letting<br>
+                us know helps us follow your dream patterns over time.
+            </p>
+
+            <a href="{{ url_for('dashboard') }}" class="home-btn">Back to Dashboard</a>
+
+        </div>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

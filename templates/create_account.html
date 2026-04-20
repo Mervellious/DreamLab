@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+
+        <link rel="stylesheet" href="{{ url_for('static', filename='create_account.css') }}">
+</head>
+<body>
+       <main>
+        <div class="signup-box">
+            <a href="{{ url_for('home') }}" class="back-link">← Back</a>
+            <h2>Let's Get You Started</h2>
+
+            <div class="signup-buttons">
+                <button onclick="window.location.href='/patient_signup'">I am a Patient</button>
+                <button onclick="window.location.href='/clinician_signup'">I am a Clinician</button>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
+

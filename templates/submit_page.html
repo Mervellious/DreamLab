@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submitted - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='submit_page.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="page-wrapper">
+
+        <div class="card">
+
+            <div class="success-icon">
+                <i data-lucide="check" class="check-icon"></i>
+            </div>
+
+            <h1 class="submitted-title">SUBMITTED !</h1>
+
+            <p class="submitted-body">
+                Thanks for sharing your dream.<br>
+                It has been sent to your clinician
+            </p>
+
+            <a href="{{ url_for('dashboard') }}" class="home-btn">Back to Homepage</a>
+
+        </div>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

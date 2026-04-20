@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinician Signup</title>
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='clinician_signup.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <main>
+        <div class="signup-box">
+            <a href="{{ url_for('create_account') }}" class="back-link">← Back</a>
+            {% if msg %}
+                  <p class="msg">{{msg}}</p>
+              {% endif %}
+
+        <h2>Create Your Account</h2>
+
+         <form action="/clinician_signup" method="POST" novalidate>
+
+            <label for="name"></label>
+            <input type="text" placeholder="Name" name="username">
+
+
+            <label for="surname"></label>
+            <input type="text" placeholder="Surname" name="usersurname">
+
+
+            <label for="Licence Number"></label>
+            <input type="text" placeholder="Licence Number" name="licencenumber">
+
+            
+            <label for="email"></label>
+            <input type="email" placeholder="Work Email" name="workemail">
+
+
+            <label for="create_password"></label>
+            <div class="password-input-wrapper">
+            <input type="password" placeholder="Create Password" name="create_password" class="input-field" id="clinicianCreatePwd">
+            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('clinicianCreatePwd', this)">
+                <i data-lucide="eye" class="eye-icon"></i>
+            </button>
+            <span class="tooltip-wrapper">
+                 <i data-lucide="info" class="info-icon"></i>
+                <div class="tooltip-box">
+               <p>Password must include:</p>
+
+                 <ul>
+             <li>At least 6 characters</li>
+             <li>At least 1 number</li>
+             <li>At least 1 special character (e.g. @, !, #)</li>
+            </ul>
+
+         </div>
+        </span>
+    </div>
+
+
+        <label for="confirm_password"></label>
+        <div class="password-input-wrapper password-input-simple">
+            <input type="password" placeholder="Confirm Password" name="confirm_password" class="input-field" id="clinicianConfirmPwd">
+            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('clinicianConfirmPwd', this)">
+                <i data-lucide="eye" class="eye-icon"></i>
+            </button>
+        </div>
+
+        <button>Continue</button>
+
+         </form>
+
+        </div>
+
+        <p>Have an account ? <a href="{{ url_for('login') }}">Login</a></p>
+
+
+    </main>
+    <script>
+        lucide.createIcons();
+        function togglePasswordVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('[data-lucide]');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+    </script>
+
+
+</body>
+</html>

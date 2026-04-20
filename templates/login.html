@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <main>
+        <div class="login-box">
+            <a href="{{ url_for('home') }}" class="back-link">← Back</a>
+
+            {% if msg %}
+            <p class="msg">{{ msg }}</p>
+            {% endif %}
+
+            <h2>Welcome Back</h2>
+
+            <form action="/login" method="POST" novalidate>
+            <label for="email"></label>
+            <input type="email" placeholder="Email" name="email">
+
+            <label for="loginpassword"></label>
+            <div class="password-input-wrapper">
+                <input type="password" placeholder="Password" name="password" class="input-field" id="loginPassword">
+                <button type="button" class="toggle-password" onclick="togglePasswordVisibility('loginPassword', this)">
+                    <i data-lucide="eye" class="eye-icon"></i>
+                </button>
+            </div>
+
+            <button>Continue</button>
+        </form>
+
+                    <a href="{{ url_for('forgot_password') }}">Forgot Password?</a>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        function togglePasswordVisibility(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('[data-lucide]');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.setAttribute('data-lucide', 'eye-off');
+            } else {
+                input.type = 'password';
+                icon.setAttribute('data-lucide', 'eye');
+            }
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

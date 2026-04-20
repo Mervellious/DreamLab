@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+</head>
+<body>
+
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="{{ url_for('static' , filename='bg_video.mp4') }}" type="video/mp4">
+    </video>
+
+    <nav class="navbar">
+      
+
+      <div class="logo">DREAMLAB</div>
+
+      <div class="nav-spacer"></div>
+
+    <ul class="nav-menu" id="nav-menu">
+    <li><a href="whatisdreamlab.html">What Is DreamLab</a></li>
+    <li><a href="howitworks.html">How It Works</a></li>
+    <li><a href="contact.html">Contact</a></li>
+     </ul> 
+    </nav>
+
+    <main>
+ <h1>Unlock The Science Of Your Dreams</h1>
+
+ <div class="portal-buttons">
+
+ <button onclick="window.location.href='/login'">Patient Portal</button>
+ <button onclick="window.location.href='/login'">Clinician Portal</button>
+
+ </div>
+
+ <p>New to DreamLab? Create an account <a href="/create_account">here</a></p>
+    </main>
+
+   
+</body>
+</html>

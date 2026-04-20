@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 5 - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='q5.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="top-nav-icons">
+        <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+            <i data-lucide="home"></i>
+        </a>
+        <a href="{{ url_for('login') }}" class="nav-icon-btn" title="Log Out">
+            <i data-lucide="log-out"></i>
+        </a>
+    </div>
+
+    <div class="page-wrapper">
+
+        <div class="card">
+        <form method="POST" action="/q5" style="display: contents;">
+
+            <p class="question-label">How did you feel when you woke up?<br>Select all that apply.</p>
+
+            <div class="emotion-picker">
+
+                <!-- Positive -->
+                <div class="emotion-group">
+                    <button type="button" class="group-header" onclick="toggleGroup(this)">
+                        <span>Positive</span>
+                        <i data-lucide="chevron-down" class="chevron"></i>
+                    </button>
+                    <div class="group-body">
+                        <div class="emotion-grid">
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Happy</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Joy</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Love</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Peace</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Calm</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Relief</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Balance</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Negative -->
+                <div class="emotion-group">
+                    <button type="button" class="group-header" onclick="toggleGroup(this)">
+                        <span>Negative</span>
+                        <i data-lucide="chevron-down" class="chevron"></i>
+                    </button>
+                    <div class="group-body">
+                        <div class="emotion-grid">
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Anxious</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Fear</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Panic</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Worry</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Frustrated</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Anger</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Regret</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Jealousy</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Energised -->
+                <div class="emotion-group">
+                    <button type="button" class="group-header" onclick="toggleGroup(this)">
+                        <span>Energised</span>
+                        <i data-lucide="chevron-down" class="chevron"></i>
+                    </button>
+                    <div class="group-body">
+                        <div class="emotion-grid">
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Excitement</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Curiosity</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Desire</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fragile -->
+                <div class="emotion-group">
+                    <button type="button" class="group-header" onclick="toggleGroup(this)">
+                        <span>Fragile</span>
+                        <i data-lucide="chevron-down" class="chevron"></i>
+                    </button>
+                    <div class="group-body">
+                        <div class="emotion-grid">
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Sadness</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Shame</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Fragility</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Confused</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Pain</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unclear -->
+                <div class="emotion-group">
+                    <button type="button" class="group-header" onclick="toggleGroup(this)">
+                        <span>Unclear</span>
+                        <i data-lucide="chevron-down" class="chevron"></i>
+                    </button>
+                    <div class="group-body">
+                        <div class="emotion-grid">
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Neutral</button>
+                            <button type="button" class="emotion-btn" onclick="toggleEmotion(this)">Unsure</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Hidden input to track selected emotions -->
+            <input type="hidden" id="selected-emotions" name="emotions" value="">
+
+            <div class="pagination">
+                <a href="{{ url_for('q4') }}" class="page-btn">
+                    <i data-lucide="arrow-left"></i>
+                    Back
+                </a>
+                <button type="submit" class="page-btn">
+                    Next
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+
+        </form>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleGroup(headerBtn) {
+            const group = headerBtn.parentElement;
+            const body = group.querySelector('.group-body');
+            const isOpen = group.classList.contains('open');
+
+            if (isOpen) {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                // Force reflow then collapse
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        body.style.maxHeight = '0';
+                    });
+                });
+                group.classList.remove('open');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                group.classList.add('open');
+            }
+        }
+
+        function toggleEmotion(btn) {
+            btn.classList.toggle('active');
+            updateSelectedEmotions();
+        }
+
+        function updateSelectedEmotions() {
+            const active = document.querySelectorAll('.emotion-btn.active');
+            const emotions = Array.from(active).map(b => b.textContent.trim());
+            document.getElementById('selected-emotions').value = emotions.join(',');
+        }
+    </script>
+</body>
+</html>

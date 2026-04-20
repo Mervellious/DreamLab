@@ -1,0 +1,296 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box ;
+}
+body {
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #AAE4E7 0%, #EDD2FF 100%);
+    position: relative;
+    overflow: hidden;
+}
+ 
+/* Soft background blobs */
+body::before,
+body::after {
+    content: '';
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    pointer-events: none;
+}
+ 
+body::before {
+    width: 520px;
+    height: 520px;
+    background: radial-gradient(circle, #AAE4E7, #b8eaec);
+    top: -140px;
+    left: -100px;
+}
+ 
+body::after {
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, #EDD2FF, #e0c0f8);
+    bottom: -100px;
+    right: -80px;
+}
+ 
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 24px;
+    position: relative;
+    z-index: 1;
+}
+ 
+.signup-box {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: 28px;
+    padding: 52px 44px 44px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    box-shadow:
+        0 0 60px rgba(255, 255, 255, 0.6),
+        0 0 25px rgba(255, 255, 255, 0.45),
+        0 8px 32px rgba(120, 100, 220, 0.2),
+        0 24px 64px rgba(100, 80, 200, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+ 
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+ 
+.signup-box h2 {
+    font-size: 26px;
+    font-weight: 700;
+    color: black;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.signup-box input {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #3d3a6b;
+    background: #ffffff;
+    border: 1.5px solid rgba(190, 180, 255, 0.4);
+    border-radius: 14px;
+    padding: 14px 18px;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow:
+        0 2px 8px rgba(160, 140, 220, 0.08),
+        0 1px 3px rgba(160, 140, 220, 0.05);
+}
+ 
+.signup-box input::placeholder {
+    color: #b0a8d4;
+    font-weight: 400;
+}
+ 
+.signup-box input:focus {
+    border-color: #a89ee0;
+    box-shadow:
+        0 0 0 3px rgba(168, 158, 224, 0.15),
+        0 2px 8px rgba(160, 140, 220, 0.1);
+}
+ 
+.signup-box button {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: black;
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.2), rgba(237, 210, 255, 0.2));
+    border: 1.5px solid #6155f5;
+    border-radius: 20px;
+    padding: 13px 20px;
+    width: 100%;
+    cursor: pointer;
+    margin-top: 4px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.signup-box button:hover {
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.45), rgba(237, 210, 255, 0.45));
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(130, 100, 245, 0.25);
+}
+
+.signup-box .msg{
+    color: #1a04e0;
+    font-size: 26px;
+    font-weight: 700;
+    text-align: center;
+}
+ 
+.signup-box .have-account {
+    font-size: 13px;
+    font-weight: 500;
+    color: #7a72b0;
+    text-align: center;
+}
+
+.signup-box .have-account a {
+    color: #9b8fdc;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.signup-box .have-account a:hover {
+    color: #6155f5;
+    text-decoration: none;
+}
+
+.signup-box .back-link {
+    font-size: 14px;
+    font-weight: 500;
+    color: #b0a8d4;
+    text-decoration: none;
+    align-self: flex-start;
+    transition: color 0.2s;
+}
+
+.signup-box .back-link:hover {
+    color: #6155f5;
+    text-decoration: none;
+}
+
+.msg{
+    color:red;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align:center;
+}
+
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.password-input-wrapper .input-field {
+    width: 100%;
+    padding-right: 54px;
+}
+
+.password-input-wrapper .toggle-password {
+    position: absolute;
+    right: 30px;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #b0a8d4;
+    transition: color 0.2s;
+    width: auto;
+    border-radius: 0;
+    font-size: initial;
+    font-family: inherit;
+    font-weight: normal;
+    box-shadow: none;
+}
+
+.password-input-wrapper .toggle-password:hover {
+    color: #6155f5;
+    background: none;
+    transform: none;
+    box-shadow: none;
+}
+
+.eye-icon {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+.password-input-simple .input-field {
+    padding-right: 44px;
+}
+
+.password-input-simple .toggle-password {
+    right: 10px;
+}
+
+.tooltip-wrapper {
+    position: absolute;
+    right: 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.info-icon {
+    width: 15px;
+    height: 15px;
+    color: #b0a8d4;
+    cursor: pointer;
+    display: block;
+}
+
+.tooltip-box {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid rgba(190, 180, 255, 0.4);
+    border-radius: 12px;
+    padding: 12px 14px;
+    min-width: 210px;
+    font-size: 0.75rem;
+    color: #7a72b0;
+    box-shadow: 0 4px 16px rgba(120, 100, 220, 0.15);
+    z-index: 10;
+    transition: opacity 0.2s, visibility 0.2s;
+    line-height: 1.6;
+}
+
+.tooltip-box p {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+.tooltip-box ul {
+    padding-left: 16px;
+}
+
+.tooltip-wrapper:hover .tooltip-box {
+    opacity: 1;
+    visibility: visible;
+}

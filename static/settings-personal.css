@@ -1,0 +1,13 @@
+/* settings-personal.css
+   Page-specific styles for the Personal Information sub-page.
+   Base layout, sidebar, nav, glass cards, field rows, and edit form
+   are defined in settings.css — link that file first.
+*/
+
+/* No additional layout overrides needed — all shared styles
+   are in settings.css. This file is reserved for any future
+   personal-page-specific additions (e.g. date-picker styling). */
+
+.field-row:focus-within .field-label {
+    color: #6155f5;
+}

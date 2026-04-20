@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Reports - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_dreams.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item active-nav">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar"></div>
+
+            <div class="dreams-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <p class="card-title">
+                            <i data-lucide="file-text" class="card-title-icon"></i>
+                            My Reports
+                        </p>
+                        <p class="card-subtitle">{{ reports | length }} report{{ 's' if reports | length != 1 else '' }} available</p>
+                    </div>
+                </div>
+
+                {% if reports %}
+                <div class="timeline">
+                    {% for report in reports %}
+                    <div class="timeline-entry">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-body">
+                            <p class="entry-date">{{ report.created_at.strftime('%d %B %Y').upper() }}</p>
+                            <a href="{{ url_for('report_detail', report_id=report.id) }}" class="entry-card">
+                                <div class="entry-text">
+                                    <p class="entry-title">{{ report.title }}</p>
+                                    <p class="entry-preview">
+                                        {% if report.content | length > 120 %}
+                                            {{ report.content[:120] }}...
+                                        {% else %}
+                                            {{ report.content }}
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <div class="report-view-btn">View Report</div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="no-reports">
+                    <i data-lucide="file-text" class="no-reports-icon"></i>
+                    <p>No reports available yet.</p>
+                </div>
+                {% endif %}
+            </div>
+        </main>
+
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

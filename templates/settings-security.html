@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login &amp; Security - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='settings-security.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item active-nav">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Top Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <a href="/settings" class="back-link">
+                <i data-lucide="arrow-left" style="width:15px;height:15px;"></i>
+                Settings
+            </a>
+
+            <div class="top-bar">
+                <h1 class="page-title">Login &amp; Security</h1>
+            </div>
+
+            <div class="section-card">
+
+                <!-- Email Address -->
+                <div class="field-row" id="row-email">
+                    <div class="field-row-header">
+                        <div class="field-info">
+                            <span class="field-label">Email Address</span>
+                            <span class="field-value" id="val-email">{{ user_email }}</span>
+                        </div>
+                        <button
+                            class="change-link"
+                            aria-label="Change email address"
+                            onclick="openEdit('email')">
+                            Change
+                        </button>
+                    </div>
+                    <div class="edit-form" id="form-email" role="group" aria-label="Edit email address">
+                        <label for="input-email" class="field-label">New Email Address</label>
+                        <input
+                            class="edit-input"
+                            id="input-email"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="Enter new email address" />
+                        <div class="edit-actions">
+                            <button class="save-btn" onclick="saveEmail()">Save</button>
+                            <button class="cancel-link" onclick="cancelEdit('email')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div class="field-row" id="row-password">
+                    <div class="field-row-header">
+                        <div class="field-info">
+                            <span class="field-label">Password</span>
+                            <span class="field-value" id="val-password">••••••••</span>
+                        </div>
+                        <button
+                            class="change-link"
+                            aria-label="Change password"
+                            onclick="openEdit('password')">
+                            Change
+                        </button>
+                    </div>
+                    <div class="edit-form" id="form-password" role="group" aria-label="Change password">
+
+                        <label for="input-current-pw" class="field-label">Current Password</label>
+                        <div class="password-input-wrapper">
+                            <input
+                                class="edit-input"
+                                id="input-current-pw"
+                                type="password"
+                                autocomplete="current-password"
+                                placeholder="Enter current password" />
+                            <button
+                                type="button"
+                                class="toggle-pw-btn"
+                                aria-label="Toggle current password visibility"
+                                onclick="togglePw('input-current-pw', this)">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+
+                        <label for="input-new-pw" class="field-label">New Password</label>
+                        <div class="password-input-wrapper">
+                            <input
+                                class="edit-input"
+                                id="input-new-pw"
+                                type="password"
+                                autocomplete="new-password"
+                                placeholder="Enter new password" />
+                            <button
+                                type="button"
+                                class="toggle-pw-btn"
+                                aria-label="Toggle new password visibility"
+                                onclick="togglePw('input-new-pw', this)">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+
+                        <label for="input-confirm-pw" class="field-label">Confirm New Password</label>
+                        <div class="password-input-wrapper">
+                            <input
+                                class="edit-input"
+                                id="input-confirm-pw"
+                                type="password"
+                                autocomplete="new-password"
+                                placeholder="Confirm new password" />
+                            <button
+                                type="button"
+                                class="toggle-pw-btn"
+                                aria-label="Toggle confirm password visibility"
+                                onclick="togglePw('input-confirm-pw', this)">
+                                <i data-lucide="eye"></i>
+                            </button>
+                        </div>
+
+                        <div class="edit-actions">
+                            <button class="save-btn" onclick="savePassword()">Save</button>
+                            <button class="cancel-link" onclick="cancelEdit('password')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+    <script>
+        function openEdit(field) {
+            closeAllForms();
+            const form = document.getElementById('form-' + field);
+            form.classList.add('open');
+
+            if (field === 'email') {
+                const input = document.getElementById('input-email');
+                input.value = document.getElementById('val-email').textContent.trim();
+                input.focus();
+            } else if (field === 'password') {
+                document.getElementById('input-current-pw').value = '';
+                document.getElementById('input-new-pw').value = '';
+                document.getElementById('input-confirm-pw').value = '';
+                document.getElementById('input-current-pw').focus();
+            }
+        }
+
+        function cancelEdit(field) {
+            document.getElementById('form-' + field).classList.remove('open');
+        }
+
+        function closeAllForms() {
+            document.querySelectorAll('.edit-form.open').forEach(function(form) {
+                form.classList.remove('open');
+            });
+        }
+
+        function saveEmail() {
+            const input = document.getElementById('input-email');
+            const val = input.value.trim();
+            if (!val || !val.includes('@')) {
+                input.focus();
+                return;
+            }
+            document.getElementById('val-email').textContent = val;
+            const fd = new FormData();
+            fd.append('email', val);
+            fetch('/settings/security/email', {method: 'POST', body: fd});
+            cancelEdit('email');
+        }
+
+        function savePassword() {
+            const current = document.getElementById('input-current-pw').value;
+            const newPw = document.getElementById('input-new-pw').value;
+            const confirm = document.getElementById('input-confirm-pw').value;
+
+            if (!current) {
+                document.getElementById('input-current-pw').focus();
+                return;
+            }
+            if (!newPw) {
+                document.getElementById('input-new-pw').focus();
+                return;
+            }
+            if (newPw !== confirm) {
+                document.getElementById('input-confirm-pw').focus();
+                return;
+            }
+            // Password updated (UI only — wire to backend as needed)
+            cancelEdit('password');
+        }
+
+        function togglePw(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const isHidden = input.type === 'password';
+            input.type = isHidden ? 'text' : 'password';
+
+            // Swap icon
+            btn.innerHTML = isHidden
+                ? '<i data-lucide="eye-off"></i>'
+                : '<i data-lucide="eye"></i>';
+            lucide.createIcons();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAllForms();
+            }
+        });
+    </script>
+</body>
+</html>

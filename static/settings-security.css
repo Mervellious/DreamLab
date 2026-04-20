@@ -1,0 +1,47 @@
+/* settings-security.css
+   Page-specific styles for the Login & Security sub-page.
+   Base layout, sidebar, nav, glass cards, field rows, and edit form
+   are defined in settings.css — link that file first.
+*/
+
+/* ── PASSWORD INPUT WRAPPER ── */
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-input-wrapper .edit-input {
+    padding-right: 46px;
+}
+
+/* ── SHOW / HIDE TOGGLE ── */
+.toggle-pw-btn {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #b0a8d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.toggle-pw-btn:hover {
+    color: #6155f5;
+}
+
+.toggle-pw-btn svg {
+    width: 16px;
+    height: 16px;
+    pointer-events: none;
+}
+
+.field-row:focus-within .field-label {
+    color: #6155f5;
+}

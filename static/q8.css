@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #b8ebf7 0%, #d4d1fb 100%);
+}
+
+/* ── NAV ICONS ── */
+.top-nav-icons {
+    position: fixed;
+    top: 20px;
+    right: 40px;
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+}
+
+.nav-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: #6155f5;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+.nav-icon-btn:hover {
+    opacity: 0.55;
+}
+
+.nav-icon-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ── PAGE WRAPPER ── */
+.page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* ── CARD ── */
+.card {
+    width: 100%;
+    max-width: 545px;
+    min-height: 677px;
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 26px;
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow:
+        0 0 60px rgba(255, 255, 255, 0.6),
+        0 0 25px rgba(255, 255, 255, 0.45),
+        0 8px 32px rgba(120, 100, 220, 0.2),
+        0 24px 64px rgba(100, 80, 200, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* ── QUESTION LABEL ── */
+.question-label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* ── CHOICE BUTTONS ── */
+.choice-buttons {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.choice-btn {
+    width: 58%;
+    padding: 13px 20px;
+    border: 1.5px solid #6155f5;
+    border-radius: 20px;
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.2), rgba(237, 210, 255, 0.2));
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: black;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.choice-btn.active,
+.choice-btn.active:hover {
+    background: #6155f5;
+    border-color: #6155f5;
+    color: white;
+    transform: none;
+    box-shadow: 0 0 18px rgba(97, 85, 245, 0.45), 0 0 6px rgba(97, 85, 245, 0.3);
+}
+
+.choice-btn:hover {
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.45), rgba(237, 210, 255, 0.45));
+    transform: translateY(-2px);
+    box-shadow: 0 0 12px rgba(130, 100, 245, 0.25);
+}
+
+/* ── SUBMIT BUTTON ── */
+.submit-btn {
+    display: block;
+    margin: 0 auto;
+    width: 58%;
+    padding: 16px;
+    background: #6155f5;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+    color: white;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.submit-btn:hover {
+    opacity: 0.88;
+    transform: translateY(-2px);
+}
+
+/* ── PAGINATION ── */
+.pagination {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border: 1.5px solid #6155f5;
+    border-radius: 20px;
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.2), rgba(237, 210, 255, 0.2));
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.page-btn:hover {
+    background: linear-gradient(to right, rgba(170, 228, 231, 0.45), rgba(237, 210, 255, 0.45));
+    transform: translateY(-2px);
+}
+
+.page-btn svg {
+    width: 18px;
+    height: 18px;
+}

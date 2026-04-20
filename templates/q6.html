@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 6 - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='q6.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="top-nav-icons">
+        <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+            <i data-lucide="home"></i>
+        </a>
+        <a href="{{ url_for('login') }}" class="nav-icon-btn" title="Log Out">
+            <i data-lucide="log-out"></i>
+        </a>
+    </div>
+
+    <div class="page-wrapper">
+
+        <form method="POST" action="/q6">
+        <div class="card">
+
+            <p class="question-label">How was your mood the day before the dream?</p>
+
+            <div class="choice-buttons">
+                <button type="button" class="choice-btn">Relaxed</button>
+                <button type="button" class="choice-btn">Sad</button>
+                <button type="button" class="choice-btn">Stressed</button>
+                <button type="button" class="choice-btn">Neutral</button>
+                <button type="button" class="choice-btn">Emotionally overwhelmed</button>
+                <button type="button" class="choice-btn">Not sure</button>
+            </div>
+            <input type="hidden" id="previous-day-mood" name="previous_day_mood" value="">
+
+            <div class="pagination">
+                <a href="{{ url_for('q5') }}" class="page-btn">
+                    <i data-lucide="arrow-left"></i>
+                    Back
+                </a>
+                <button type="submit" class="page-btn">
+                    Next
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+
+        </div>
+        </form>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.querySelectorAll('.choice-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isActive = btn.classList.contains('active');
+                document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+                if (!isActive) {
+                    btn.classList.add('active');
+                    document.getElementById('previous-day-mood').value = btn.textContent.trim();
+                } else {
+                    document.getElementById('previous-day-mood').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

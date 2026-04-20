@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Information - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='settings-personal.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item active-nav">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Top Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <a href="/settings" class="back-link">
+                <i data-lucide="arrow-left" style="width:15px;height:15px;"></i>
+                Settings
+            </a>
+
+            <div class="top-bar">
+                <h1 class="page-title">Personal Information</h1>
+            </div>
+
+            <div class="section-card">
+
+                <!-- First Name -->
+                <div class="field-row" id="row-firstname">
+                    <div class="field-row-header">
+                        <div class="field-info">
+                            <span class="field-label">First Name</span>
+                            <span class="field-value" id="val-firstname">{{ user_name }}</span>
+                        </div>
+                        <button
+                            class="change-link"
+                            aria-label="Change first name"
+                            onclick="openEdit('firstname')">
+                            Change
+                        </button>
+                    </div>
+                    <div class="edit-form" id="form-firstname" role="group" aria-label="Edit first name">
+                        <label for="input-firstname" class="field-label">New First Name</label>
+                        <input
+                            class="edit-input"
+                            id="input-firstname"
+                            type="text"
+                            autocomplete="given-name"
+                            placeholder="Enter first name" />
+                        <div class="edit-actions">
+                            <button class="save-btn" onclick="saveField('firstname')">Save</button>
+                            <button class="cancel-link" onclick="cancelEdit('firstname')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Last Name -->
+                <div class="field-row" id="row-lastname">
+                    <div class="field-row-header">
+                        <div class="field-info">
+                            <span class="field-label">Last Name</span>
+                            <span class="field-value" id="val-lastname">{{ user_surname }}</span>
+                        </div>
+                        <button
+                            class="change-link"
+                            aria-label="Change last name"
+                            onclick="openEdit('lastname')">
+                            Change
+                        </button>
+                    </div>
+                    <div class="edit-form" id="form-lastname" role="group" aria-label="Edit last name">
+                        <label for="input-lastname" class="field-label">New Last Name</label>
+                        <input
+                            class="edit-input"
+                            id="input-lastname"
+                            type="text"
+                            autocomplete="family-name"
+                            placeholder="Enter last name" />
+                        <div class="edit-actions">
+                            <button class="save-btn" onclick="saveField('lastname')">Save</button>
+                            <button class="cancel-link" onclick="cancelEdit('lastname')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="field-row" id="row-dob">
+                    <div class="field-row-header">
+                        <div class="field-info">
+                            <span class="field-label">Date of Birth</span>
+                            <span class="field-value" id="val-dob">January 1, 1990</span>
+                        </div>
+                        <button
+                            class="change-link"
+                            aria-label="Change date of birth"
+                            onclick="openEdit('dob')">
+                            Change
+                        </button>
+                    </div>
+                    <div class="edit-form" id="form-dob" role="group" aria-label="Edit date of birth">
+                        <label for="input-dob" class="field-label">New Date of Birth</label>
+                        <input
+                            class="edit-input"
+                            id="input-dob"
+                            type="date"
+                            autocomplete="bday" />
+                        <div class="edit-actions">
+                            <button class="save-btn" onclick="saveField('dob')">Save</button>
+                            <button class="cancel-link" onclick="cancelEdit('dob')">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+    <script>
+        function openEdit(field) {
+            closeAllForms();
+            const form = document.getElementById('form-' + field);
+            const valueEl = document.getElementById('val-' + field);
+            const input = document.getElementById('input-' + field);
+
+            form.classList.add('open');
+
+            if (input.type === 'date') {
+                // Convert display date to YYYY-MM-DD for date input
+                const raw = valueEl.textContent.trim();
+                const parsed = new Date(raw);
+                if (!isNaN(parsed)) {
+                    const y = parsed.getFullYear();
+                    const m = String(parsed.getMonth() + 1).padStart(2, '0');
+                    const d = String(parsed.getDate()).padStart(2, '0');
+                    input.value = y + '-' + m + '-' + d;
+                }
+            } else {
+                input.value = valueEl.textContent.trim();
+            }
+
+            input.focus();
+        }
+
+        function cancelEdit(field) {
+            const form = document.getElementById('form-' + field);
+            form.classList.remove('open');
+        }
+
+        function saveField(field) {
+            const input = document.getElementById('input-' + field);
+            const valueEl = document.getElementById('val-' + field);
+            const raw = input.value.trim();
+
+            if (!raw) {
+                input.focus();
+                return;
+            }
+
+            if (input.type === 'date') {
+                const parsed = new Date(raw + 'T00:00:00');
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                valueEl.textContent = parsed.toLocaleDateString('en-US', options);
+            } else {
+                valueEl.textContent = raw;
+                if (field === 'firstname' || field === 'lastname') {
+                    const name = field === 'firstname' ? raw : document.getElementById('val-firstname').textContent.trim();
+                    const surname = field === 'lastname' ? raw : document.getElementById('val-lastname').textContent.trim();
+                    const fd = new FormData();
+                    fd.append('name', name);
+                    fd.append('surname', surname);
+                    fetch('/settings/personal', {method: 'POST', body: fd});
+                }
+            }
+
+            cancelEdit(field);
+        }
+
+        function closeAllForms() {
+            document.querySelectorAll('.edit-form.open').forEach(function(form) {
+                form.classList.remove('open');
+            });
+        }
+
+        // Allow pressing Enter to save
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const openForm = document.querySelector('.edit-form.open');
+                if (openForm) {
+                    const field = openForm.id.replace('form-', '');
+                    saveField(field);
+                }
+            }
+            if (e.key === 'Escape') {
+                const openForm = document.querySelector('.edit-form.open');
+                if (openForm) {
+                    const field = openForm.id.replace('form-', '');
+                    cancelEdit(field);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

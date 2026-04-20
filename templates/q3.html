@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 3 - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='q3.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="top-nav-icons">
+        <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+            <i data-lucide="home"></i>
+        </a>
+        <a href="{{ url_for('login') }}" class="nav-icon-btn" title="Log Out">
+            <i data-lucide="log-out"></i>
+        </a>
+    </div>
+
+    <div class="page-wrapper">
+
+        <div class="card">
+        <form method="POST" action="/q3" style="display: contents;">
+
+            <p class="question-label">Did anyone appear in your dream?</p>
+
+            <div class="choice-buttons">
+                <button type="button" class="choice-btn">Yes – someone I know</button>
+                <button type="button" class="choice-btn">Yes – someone I don't know</button>
+                <button type="button" class="choice-btn">Yes – both</button>
+                <button type="button" class="choice-btn">No</button>
+            </div>
+            <input type="hidden" id="people-appeared" name="people_appeared" value="">
+
+            <div class="field-group">
+                <label class="field-label">If yes, who appeared in your dream?</label>
+                <textarea class="dream-textarea" name="people_description"></textarea>
+            </div>
+
+            <div class="pagination">
+                <a href="{{ url_for('q2') }}" class="page-btn">
+                    <i data-lucide="arrow-left"></i>
+                    Back
+                </a>
+                <button type="submit" class="page-btn">
+                    Next
+                    <i data-lucide="arrow-right"></i>
+                </button>
+            </div>
+
+        </form>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.querySelectorAll('.choice-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isActive = btn.classList.contains('active');
+                document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+                if (!isActive) {
+                    btn.classList.add('active');
+                    document.getElementById('people-appeared').value = btn.textContent.trim();
+                } else {
+                    document.getElementById('people-appeared').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

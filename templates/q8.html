@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 8 - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='q8.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+    <div class="top-nav-icons">
+        <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+            <i data-lucide="home"></i>
+        </a>
+        <a href="{{ url_for('login') }}" class="nav-icon-btn" title="Log Out">
+            <i data-lucide="log-out"></i>
+        </a>
+    </div>
+
+    <div class="page-wrapper">
+
+        <div class="card">
+        <form method="POST" action="/q8" style="display: contents;">
+
+            <p class="question-label">How would you rate your sleep that night?</p>
+
+            <div class="choice-buttons">
+                <button type="button" class="choice-btn">Very poor</button>
+                <button type="button" class="choice-btn">Poor</button>
+                <button type="button" class="choice-btn">Fair</button>
+                <button type="button" class="choice-btn">Good</button>
+                <button type="button" class="choice-btn">Very Good</button>
+            </div>
+            <input type="hidden" id="sleep-quality" name="sleep_qualitiy" value="">
+
+            <button type="submit" class="submit-btn">SUBMIT</button>
+
+            <div class="pagination">
+                <a href="{{ url_for('q7') }}" class="page-btn">
+                    <i data-lucide="arrow-left"></i>
+                    Back
+                </a>
+            </div>
+
+        </form>
+        </div>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+        document.querySelectorAll('.choice-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isActive = btn.classList.contains('active');
+                document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('active'));
+                if (!isActive) {
+                    btn.classList.add('active');
+                    document.getElementById('sleep-quality').value = btn.textContent.trim();
+                } else {
+                    document.getElementById('sleep-quality').value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

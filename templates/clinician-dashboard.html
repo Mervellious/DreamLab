@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinician Dashboard - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='clinician-dashboard.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="cl-dashboard">
+
+        <!-- SIDEBAR  -->
+        <aside class="cl-sidebar">
+
+            <!-- PROFILE AVATAR -->
+            <div class="cl-profile">
+                <div class="cl-avatar">
+                <i data-lucide="user" class="cl-avatar-icon"></i>
+                </div>
+                
+            </div>
+
+            <!-- QUICK ACTIONS -->
+
+            <div class="cl-quick-actions">
+                <button class="cl-quick-btn">
+                <i data-lucide="file-edit" class="cl-quick-icon"></i>
+                    Generate Report
+                </button>
+
+                <button class="cl-quick-btn">
+                <i data-lucide="user-plus" class="cl-quick-icon"></i>
+                    Add a Patient
+                </button>
+
+            </div>
+
+            <!-- DIVIDER -->
+         <div class="cl-sidebar-divider"></div>
+
+            <!-- NAVIGATION -->
+
+        <nav class="cl-sidebar-nav">
+            <a href="#" class="cl-nav-item">
+            <i data-lucide="users" class="cl-nav-icon"></i>
+                    Patients
+            </a>
+
+            <a href="#" class="cl-nav-item">
+             <i data-lucide="book-open" class="cl-nav-icon"></i>
+                    Dream Records
+            </a>
+
+            <a href="#" class="cl-nav-item">
+            <i data-lucide="bar-chart-2" class="cl-nav-icon"></i>
+                    Pattern Analysis
+            </a>
+
+            <a href="#" class="cl-nav-item">
+            <i data-lucide="moon" class="cl-nav-icon"></i>
+                    Sleep Insights
+            </a>
+
+            <a href="#" class="cl-nav-item">
+            <i data-lucide="heart" class="cl-nav-icon"></i>
+                    Therapies
+            </a>
+
+            <a href="#" class="cl-nav-item">
+            <i data-lucide="clipboard-list" class="cl-nav-icon"></i>
+                    Reports
+            </a>
+
+            <a href="#" class="cl-nav-item">
+            <i data-lucide="settings" class="cl-nav-icon"></i>
+                    Settings
+            </a>
+
+            </nav>
+
+        </aside>
+
+        <!-- ── TOP NAV ICONS ── -->
+
+        <div class="cl-top-nav-icons">
+        <a href="{{ url_for('logout') }}" class="cl-nav-icon-btn" title="Log Out">
+            <i data-lucide="log-out"></i>
+            </a>
+
+        </div>
+
+        <!-- ── MAIN CONTENT ── -->
+        <main class="cl-main-content">
+
+           
+            <div class="cl-top-bar">
+                <h1 class="cl-welcome-title">Welcome back, Dr. {{ user_name }}</h1>
+                <div class="cl-search-wrapper">
+                    <input type="text" class="cl-search-input" placeholder="Search">
+                    <i data-lucide="search" class="cl-search-icon"></i>
+                </div>
+            </div>
+
+            <!-- STAT CARDS -->
+            <div class="cl-stats-row">
+                <div class="cl-stat-card">
+                    <i data-lucide="users" class="cl-stat-icon"></i>
+                    <p class="cl-stat-label">Total Patients</p>
+                    <p class="cl-stat-number">18</p>
+                </div>
+                <div class="cl-stat-card">
+                    <i data-lucide="clipboard-list" class="cl-stat-icon"></i>
+                    <p class="cl-stat-label">Pending Reviews</p>
+                    <p class="cl-stat-number">4</p>
+                </div>
+                <div class="cl-stat-card">
+                    <i data-lucide="bell" class="cl-stat-icon"></i>
+                    <p class="cl-stat-label">Sleep Alerts</p>
+                    <p class="cl-stat-number">5</p>
+                </div>
+            </div>
+
+            <!-- RECENT DREAM RECORDS -->
+
+            <div class="cl-records-card">
+                <div class="cl-records-header">
+                    <span class="cl-records-title">RECENT DREAM RECORDS</span>
+            </div>
+             <div class="cl-table-wrapper">
+            <table class="cl-table">
+                 <thead>
+              <tr>
+                    <th>Patients</th>
+                    <th>Condition</th>
+                    <th>Date</th>
+                    <th>Dream Tags</th>
+                    <th>Sleep Quality</th>
+                </tr>
+                </thead>
+                 
+                    <tbody>
+                     <tr>
+                     <td>Luke Bennet</td>
+                      <td>RBD</td>
+                        <td>13 Mar 2026</td>
+                       <td>Running, Fear, Falling</td>
+                       <td><span class="cl-quality cl-moderate">Moderate</span></td>
+
+                    </tr>
+                    <tr>
+                      <td>Anna Carter</td>
+                         <td>PTSD</td>
+                        <td>13 Mar 2026</td>
+                        <td>Panic, Trapped</td>
+
+                        <td><span class="cl-quality cl-poor">Poor</span></td>
+                    </tr>
+                    <tr>
+                                <td>Aisha Khan</td>
+                                <td>Night Terrors</td>
+                                <td>13 Mar 2026</td>
+                                <td>Stress, Chasing</td>
+                                <td><span class="cl-quality cl-moderate">Moderate</span></td>
+                            </tr>
+                            <tr>
+                                <td>Sofia Alvarez</td>
+                                <td>Insomnia</td>
+                                <td>13 Mar 2026</td>
+                                <td>Escape, Loud Noise</td>
+                                <td><span class="cl-quality cl-moderate">Moderate</span></td>
+                            </tr>
+                            <tr>
+                                <td>Daniel Park</td>
+                                <td>PTSD</td>
+                                <td>12 Mar 2026</td>
+                                <td>Running, Fear, Falling</td>
+                                <td><span class="cl-quality cl-poor">Poor</span></td>
+                            </tr>
+                            <tr>
+                                <td>Thomas Grant</td>
+                                <td>Sleepwalking Disorder</td>
+                                <td>12 Mar 2026</td>
+                                <td>Being Chased, Lost</td>
+                                <td><span class="cl-quality cl-poor">Poor</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

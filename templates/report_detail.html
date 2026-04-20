@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ report.title }} - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_dreams.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='reports.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item active-nav">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar"></div>
+
+            <div class="dreams-card report-detail-card">
+                <a href="{{ url_for('reports') }}" class="back-link">
+                    <i data-lucide="arrow-left" class="back-icon"></i>
+                    Back to Reports
+                </a>
+
+                <div class="report-detail-header">
+                    <p class="report-detail-date">{{ report.created_at.strftime('%d %B %Y') }}</p>
+                    <h1 class="report-detail-title">{{ report.title }}</h1>
+                </div>
+
+                <div class="report-detail-content">
+                    {{ report.content }}
+                </div>
+            </div>
+        </main>
+
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

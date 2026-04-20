@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Overview - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='my_dreams.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='sleep_overview.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item active-nav">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar">
+                
+            </div>
+
+            <div class="dreams-card chart-card">
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <p class="card-title">Sleep Quality Over Time</p>
+                        <p class="card-subtitle">{{ sleep_data | length }} entries recorded</p>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="sleepChart"></canvas>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script>lucide.createIcons();</script>
+    <script>
+        const rawData = {{ sleep_data | tojson }};
+
+        const qualityMap = {
+            "Very Poor": 1,
+            "Poor": 2,
+            "Fair": 3,
+            "Good": 4,
+            "Very Good": 5
+        };
+        const labelMap = { 1: "Very Poor", 2: "Poor", 3: "Fair", 4: "Good", 5: "Very Good" };
+
+        const labels = rawData.map(d => d.date);
+        const values = rawData.map(d => qualityMap[d.quality] ?? null);
+
+        const ctx = document.getElementById('sleepChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Sleep Quality',
+                    data: values,
+                    borderColor: '#6155f5',
+                    backgroundColor: 'rgba(97, 85, 245, 0.08)',
+                    borderWidth: 2.5,
+                    pointBackgroundColor: '#6155f5',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7,
+                    tension: 0.4,
+                    fill: true,
+                    spanGaps: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            label: ctx => labelMap[ctx.parsed.y] ?? ctx.parsed.y
+                        },
+                        backgroundColor: 'rgba(255,255,255,0.95)',
+                        titleColor: '#333',
+                        bodyColor: '#6155f5',
+                        borderColor: 'rgba(197,191,247,0.5)',
+                        borderWidth: 1,
+                        padding: 10,
+                        cornerRadius: 10
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { color: 'rgba(197,191,247,0.2)' },
+                        ticks: {
+                            color: '#a09cf5',
+                            font: { family: 'Montserrat', size: 11 }
+                        }
+                    },
+                    y: {
+                        min: 0.5,
+                        max: 5.5,
+                        ticks: {
+                            stepSize: 1,
+                            color: '#a09cf5',
+                            font: { family: 'Montserrat', size: 11 },
+                            callback: val => labelMap[val] ?? ''
+                        },
+                        grid: { color: 'rgba(197,191,247,0.2)' }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

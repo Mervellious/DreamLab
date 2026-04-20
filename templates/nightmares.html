@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightmares - DreamLab</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='nightmares.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="dashboard">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{{ url_for('my_dreams') }}" class="nav-item">
+                    <i data-lucide="moon" class="nav-icon"></i>
+                    My Dreams
+                </a>
+                <a href="{{ url_for('nightmares') }}" class="nav-item active-nav">
+                    <i data-lucide="zap" class="nav-icon"></i>
+                    Nightmares
+                </a>
+                <a href="{{ url_for('sleep_overview') }}" class="nav-item">
+                    <i data-lucide="activity" class="nav-icon"></i>
+                    Sleep Overview
+                </a>
+                <a href="{{ url_for('mood_tracker') }}" class="nav-item">
+                    <i data-lucide="bar-chart-2" class="nav-icon"></i>
+                    Mood Tracker
+                </a>
+                <a href="{{ url_for('reports') }}" class="nav-item">
+                    <i data-lucide="file-text" class="nav-icon"></i>
+                    Reports
+                </a>
+                <a href="/settings" class="nav-item">
+                    <i data-lucide="settings" class="nav-icon"></i>
+                    Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Nav Icons -->
+        <div class="top-nav-icons">
+            <a href="{{ url_for('dashboard') }}" class="nav-icon-btn" title="Home">
+                <i data-lucide="home"></i>
+            </a>
+            <a href="{{ url_for('logout') }}" class="nav-icon-btn" title="Log Out">
+                <i data-lucide="log-out"></i>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="top-bar">
+
+
+            </div>
+
+            <div class="dreams-card">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="card-header-left">
+                        <p class="card-title">Nightmares</p>
+                        <p class="card-subtitle">{{ nightmares|length }} entries recorded</p>
+                    </div>
+                    <a href="{{ url_for('write_dream') }}" class="new-dream-btn">+ New Dream</a>
+                </div>
+
+                <!-- Timeline -->
+<div class="timeline">
+    {% for nightmare in nightmares %}
+    <div class="timeline-entry">
+        <div class="timeline-dot"></div>
+        <div class="timeline-body">
+            <p class="entry-date">{{ nightmare.date.strftime('%B %d, %Y').upper() }}</p>
+            <a href="{{ url_for('nightmare_detail', nightmare_id=nightmare.id) }}" class="entry-card">
+                <div class="entry-text">
+                    <p class="entry-title">{{ nightmare.title }}</p>
+                    <p class="entry-preview">{{ nightmare.description.split('.')[0] }}...</p>
+                    {% if nightmare.sleep_qualitiy %}
+                    <p class="entry-quality">Sleep: {{ nightmare.sleep_qualitiy }}</p>
+                    {% endif %}
+                </div>
+                <div class="entry-actions">
+                    <button class="action-btn edit-btn" title="Edit">
+                        <i data-lucide="pencil" style="width:15px;height:15px;"></i>
+                    </button>
+                    <button class="action-btn delete-btn" title="Delete"
+                        onclick="confirmDelete(this)">
+                        <i data-lucide="trash-2" style="width:15px;height:15px;"></i>
+                    </button>
+                </div>
+            </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Delete confirmation modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <p class="modal-text">Are you sure you want to delete this nightmare?</p>
+            <div class="modal-actions">
+                <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn confirm-btn" onclick="deleteEntry()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>lucide.createIcons();</script>
+    <script>
+        let pendingEntry = null;
+
+        function confirmDelete(btn) {
+            pendingEntry = btn.closest('.timeline-entry');
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeModal() {
+            pendingEntry = null;
+            document.getElementById('deleteModal').classList.remove('active');
+        }
+
+        function deleteEntry() {
+            if (pendingEntry) {
+                pendingEntry.remove();
+            }
+            closeModal();
+        }
+    </script>
+</body>
+</html>
